@@ -18,7 +18,7 @@ BFS
 DFS  
 A*
 #### Weighted:
-Dijkstra
-Bellman-Ford
-Floyd-Warshall
+Dijkstra  
+Bellman-Ford  
+Floyd-Warshall  
 A*
