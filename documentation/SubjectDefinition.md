@@ -4,7 +4,7 @@ This program is used to simulate and analyse the efficiency of different graph-s
 Breadth-first search  
 Depth-first search  
 Dijkstra  
-Bellman-Ford (Can't be simulated) 
+Bellman-Ford (Can't be simulated)  
 Floyd-Warshall (Can't be simulated)  
 Best-first search  
 A*  
@@ -24,3 +24,34 @@ Dijkstra
 Bellman-Ford  
 Floyd-Warshall  
 A*
+### Datastructures being used:
+#### Queue
+BFS
+#### Stack
+DFS
+#### Heap
+Dijkstra
+A*
+Best-first search
+### Time and space complexity:
+#### BFS
+Time: O(|V| + |E|)  
+Space: O(|V|)
+#### DFS
+Time: O(|V| + |E|)  
+Space: O(|V|)
+#### Dijkstra
+Time: O((|E| + |V|) * log|V|)  
+Space: O(|V|)
+#### Bellman-Ford
+Time: O(|V||E|)  
+Space: O(|V|)
+#### Floyd-Warshall
+Time: O(|V|^3)  
+Space: O(|V|^2)
+#### A* & Best-first
+Time and space complexity depends on the selected heuristicfunction.
+###### Source: the Datastructures and algorithms course-slides by Patrik Floréen
+[source](http://www.cs.helsinki.fi/u/floreen/tira2012/tira.pdf)
+### Additional information
+The program will be written in Java.
