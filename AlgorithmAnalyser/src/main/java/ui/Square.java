@@ -8,8 +8,8 @@ import javax.swing.JLabel;
  *
  * @author eerop
  */
-public class Square extends JLabel{
-    
+public class Square extends JLabel {
+
     private int x, y, size;
     private Vertex v;
 
@@ -21,5 +21,5 @@ public class Square extends JLabel{
         setBackground(Color.white);
         setOpaque(true);
     }
-    
+
 }

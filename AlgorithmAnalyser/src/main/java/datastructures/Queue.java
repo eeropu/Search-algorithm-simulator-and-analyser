@@ -50,13 +50,12 @@ public class Queue {
     }
 
     /*
-    Following classes are only for tests!
-    */
-    
+     Following classes are only for tests!
+     */
     protected int getHead() {
         return head;
     }
-    
+
     protected int getTail() {
         return tail;
     }

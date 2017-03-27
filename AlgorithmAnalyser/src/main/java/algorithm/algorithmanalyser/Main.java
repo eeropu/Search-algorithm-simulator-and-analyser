@@ -10,7 +10,9 @@ import ui.WindowHandler;
  */
 public class Main {
 
-    /**The programs main method that starts the program.
+    /**
+     * The programs main method that starts the program.
+     *
      * @param args the command line arguments
      */
     public static void main(String[] args) {

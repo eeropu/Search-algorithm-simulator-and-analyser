@@ -9,8 +9,8 @@ import javax.swing.JPanel;
  *
  * @author eerop
  */
-public class WindowHandler implements Runnable{
-    
+public class WindowHandler implements Runnable {
+
     private CardLayout cl;
     private JPanel cardPanel, panel;
     private Grid grid;
