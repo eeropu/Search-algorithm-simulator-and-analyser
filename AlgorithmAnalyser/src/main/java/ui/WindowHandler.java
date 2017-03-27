@@ -18,7 +18,10 @@ public class WindowHandler implements Runnable {
     public WindowHandler() {
         cl = new CardLayout();
         cardPanel = new JPanel(cl);
-        cardPanel.setBounds(960, 0, 160, 640);
+        cardPanel.setBounds(960, 0, 256, 640);
+        Menu menu = new Menu();
+        cardPanel.add(menu, "menu");
+        cl.show(cardPanel, "menu");
         panel = new JPanel();
         panel.setLayout(null);
         grid = new Grid();

@@ -39,12 +39,9 @@ public class Grid extends JPanel {
         setSquares();
     }
 
-    public void setSquares() {
+    private void setSquares() {
         int x = (int) (size / 1.5);
         int z = (int) (960 / size - 1);
-        System.out.println(size);
-        System.out.println(x);
-        System.out.println(z);
         for (int i = 0; i < size; i++) {
             for (int j = 0; j < x; j++) {
                 squares[i][j] = new Square(i, j, z);
