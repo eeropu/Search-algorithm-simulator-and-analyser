@@ -25,14 +25,6 @@ public class Grid extends JPanel {
     }
 
     public void resize(int x) {
-        if (x < 15) {
-            x = 15;
-        } else if (x > 90) {
-            x = 90;
-        }
-        while (x % 1.5 != 0) {
-            x++;
-        }
         size = x;
         x = (int) (size / 1.5);
         squares = new JLabel[size][x];
@@ -40,6 +32,7 @@ public class Grid extends JPanel {
     }
 
     private void setSquares() {
+        removeAll();
         int x = (int) (size / 1.5);
         int z = (int) (960 / size - 1);
         for (int i = 0; i < size; i++) {
@@ -52,6 +45,10 @@ public class Grid extends JPanel {
                 add(square1);
             }
         }
+    }
+
+    public JLabel[][] getSquares() {
+        return squares;
     }
 
 }

@@ -22,4 +22,7 @@ public class Square extends JLabel {
         setOpaque(true);
     }
 
+    public Vertex getV() {
+        return v;
+    }
 }

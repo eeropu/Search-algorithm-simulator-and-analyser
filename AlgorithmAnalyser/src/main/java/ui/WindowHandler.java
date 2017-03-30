@@ -4,6 +4,7 @@ import java.awt.CardLayout;
 import java.awt.Dimension;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
+import ui.listeners.MenuListener;
 
 /**
  *
@@ -11,20 +12,27 @@ import javax.swing.JPanel;
  */
 public class WindowHandler implements Runnable {
 
-    private CardLayout cl;
-    private JPanel cardPanel, panel;
-    private Grid grid;
+    private final CardLayout cl;
+    private final JPanel cardPanel, panel;
+    private final Grid grid;
 
     public WindowHandler() {
         cl = new CardLayout();
         cardPanel = new JPanel(cl);
         cardPanel.setBounds(960, 0, 256, 640);
-        Menu menu = new Menu();
+
+        grid = new Grid();
+
+        MenuListener ml = new MenuListener(grid, this);
+        Menu menu = new Menu(ml);
         cardPanel.add(menu, "menu");
         cl.show(cardPanel, "menu");
+        
+        SimulationMenu sm = new SimulationMenu();
+        cardPanel.add(sm, "simulation");
+        
         panel = new JPanel();
         panel.setLayout(null);
-        grid = new Grid();
         panel.add(grid);
         panel.add(cardPanel);
     }
@@ -38,5 +46,9 @@ public class WindowHandler implements Runnable {
         frame.setResizable(false);
         frame.add(panel);
         frame.pack();
+    }
+    
+    public void simulation(){
+        cl.show(cardPanel, "simulation");
     }
 }
