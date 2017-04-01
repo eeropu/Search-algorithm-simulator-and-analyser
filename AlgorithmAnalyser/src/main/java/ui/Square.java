@@ -21,6 +21,10 @@ public class Square extends JLabel {
         setBackground(Color.white);
         setOpaque(true);
     }
+    
+    public void setV(Vertex v){
+        this.v = v;
+    }
 
     public Vertex getV() {
         return v;

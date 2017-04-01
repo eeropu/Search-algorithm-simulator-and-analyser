@@ -1,5 +1,6 @@
 package ui;
 
+import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
 import javax.swing.ButtonGroup;
@@ -9,6 +10,7 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JRadioButton;
 import javax.swing.JTextField;
+import ui.listeners.SimulationMenuListener;
 
 /**
  *
@@ -24,6 +26,7 @@ public class SimulationMenu extends JPanel{
     private JRadioButton yes, no;
     private JButton simulate, clear, fill, back, help;
     private JTextField weightText;
+    private SimulationMenuListener sml;
     
 
     public SimulationMenu() {
@@ -31,6 +34,8 @@ public class SimulationMenu extends JPanel{
         setLayout(null);
         setPreferredSize(new Dimension(256, 640));
         setComponents();
+        this.sml = new SimulationMenuListener(jcb, addWeight, setHeuristic, start, goal, wall, weightButton, manhattan, euclidean, octile, chebyshev, yes, no, simulate, clear, fill, back, help, weightText);
+        setListener();
     }
     
     private void setComponents(){
@@ -148,10 +153,23 @@ public class SimulationMenu extends JPanel{
         add(fill);
         this.back = new JButton("Return");
         back.setBounds(32, 592, 96, 32);
+        back.setBackground(Color.DARK_GRAY);
+        back.setForeground(Color.white);
         add(back);
         this.help = new JButton("?");
         help.setFont(font);
-        help.setBounds(160, 592, 48, 32);
+        help.setBounds(144, 592, 64, 32);
+        help.setBackground(Color.DARK_GRAY);
+        help.setForeground(Color.white);
         add(help);
+    }
+    
+    private void setListener(){
+        jcb.addActionListener(sml);
+        simulate.addActionListener(sml);
+        clear.addActionListener(sml);
+        fill.addActionListener(sml);
+        back.addActionListener(sml);
+        help.addActionListener(sml);
     }
 }
