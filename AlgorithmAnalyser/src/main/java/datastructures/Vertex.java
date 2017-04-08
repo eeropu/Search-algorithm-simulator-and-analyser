@@ -1,5 +1,7 @@
 package datastructures;
 
+import ui.Square;
+
 /**
  * Objects of this class represent the vertices of the graph that is being
  * analysed.
@@ -10,7 +12,10 @@ public class Vertex implements Comparable<Vertex> {
 
     private int x, y, weight, distance;
     private double heuristic;
-    private String state;
+    private char mode;
+    private LinkedList neighbours;
+    private Square s;
+    private Vertex prev;
 
     /**
      * Constructor that is used to create a vertex without weight or heuristic
@@ -20,10 +25,11 @@ public class Vertex implements Comparable<Vertex> {
      * @param y y coordinate of this vertex
      */
     public Vertex(int x, int y) {
+        this.neighbours = new LinkedList();
         this.x = x;
         this.y = y;
         this.distance = 0;
-        this.state = "w";
+        this.mode = 'w';
     }
 
     /**
@@ -93,6 +99,20 @@ public class Vertex implements Comparable<Vertex> {
             return 1;
         }
     }
+    
+    public void addNeighbour(Vertex v){
+        neighbours.insert(v);
+    }
+    
+    public Vertex getNeighbour(){
+        return neighbours.remove();
+    }
+    
+    public void refresh(){
+        s.refresh();
+    }
+    
+    //Getters and Setters
 
     public int getX() {
         return x;
@@ -114,15 +134,27 @@ public class Vertex implements Comparable<Vertex> {
         return distance;
     }
 
-    public String getState() {
-        return state;
+    public char getMode() {
+        return mode;
     }
 
     public void setDistance(int distance) {
         this.distance = distance;
     }
 
-    public void setState(String state) {
-        this.state = state;
+    public void setMode(char mode) {
+        this.mode = mode;
+    }
+    
+    public void setS(Square s){
+        this.s = s;
+    }
+    
+    public void setPrev(Vertex v){
+        this.prev = v;
+    }
+    
+    public Vertex getPrev(){
+        return prev;
     }
 }

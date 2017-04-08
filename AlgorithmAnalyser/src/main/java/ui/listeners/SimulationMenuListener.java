@@ -1,5 +1,7 @@
 package ui.listeners;
 
+import algorithm.algorithmanalyser.Simulator;
+import algorithms.BreadthFirstSearch;
 import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -8,6 +10,9 @@ import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JRadioButton;
 import javax.swing.JTextField;
+import ui.Grid;
+import ui.Square;
+import ui.WindowHandler;
 
 /**
  *
@@ -22,6 +27,9 @@ public class SimulationMenuListener implements ActionListener {
     private JRadioButton yes, no;
     private JButton simulate, clear, fill, back, help;
     private JTextField weightText;
+    private Grid grid;
+    private WindowHandler wh;
+    private Simulator sim;
 
     public SimulationMenuListener(JComboBox<String> jcb, JLabel addWeight, JLabel setHeuristic,
             JRadioButton start, JRadioButton goal,
@@ -53,32 +61,55 @@ public class SimulationMenuListener implements ActionListener {
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        if (jcb.getSelectedItem().equals("A*")){
+        if (jcb.getSelectedItem().equals("A*")) {
             enableWeights(true);
             enableHeuristic(true);
-        } else if (jcb.getSelectedItem().equals("Best-first-search")){
+        } else if (jcb.getSelectedItem().equals("Best-first-search")) {
             enableWeights(false);
             enableHeuristic(true);
         } else if (jcb.getSelectedItem().equals("Breadth-first-search")) {
             enableWeights(false);
             enableHeuristic(false);
-        } else if (jcb.getSelectedItem().equals("Depth-first-search")){
+            if (e.getSource() == simulate) {
+                sim.bfs(yes.isSelected());
+            }
+        } else if (jcb.getSelectedItem().equals("Depth-first-search")) {
             enableWeights(false);
             enableHeuristic(false);
-        } else if (jcb.getSelectedItem().equals("Dijkstra")){
+            if(e.getSource() == simulate){
+                sim.dfs(yes.isSelected());
+            }
+        } else if (jcb.getSelectedItem().equals("Dijkstra")) {
             enableWeights(true);
             enableHeuristic(false);
+        }
+        if (e.getSource() == clear) {
+            for (Square[] s : grid.getSquares()) {
+                for (Square s1 : s) {
+                    s1.setBackground(Color.white);
+                    s1.getV().setMode('w');
+                }
+            }
+        } else if (e.getSource() == fill) {
+            for (Square[] s : grid.getSquares()) {
+                for (Square s1 : s) {
+                    s1.setBackground(Color.black);
+                    s1.getV().setMode('b');
+                }
+            }
+        } else if (e.getSource() == back) {
+            wh.mainMenu();
         }
     }
 
     private void enableWeights(boolean b) {
-        if(weightText.isEnabled() && b == false){
+        if (weightText.isEnabled() && b == false) {
             weightText.setText("");
             wall.setSelected(true);
         }
         weightText.setEnabled(b);
         weightButton.setEnabled(b);
-        if(b){
+        if (b) {
             addWeight.setForeground(Color.black);
         } else {
             addWeight.setForeground(Color.lightGray);
@@ -90,11 +121,20 @@ public class SimulationMenuListener implements ActionListener {
         euclidean.setEnabled(b);
         octile.setEnabled(b);
         chebyshev.setEnabled(b);
-        if(b){
+        if (b) {
             setHeuristic.setForeground(Color.black);
         } else {
             setHeuristic.setForeground(Color.lightGray);
         }
+    }
+
+    public void setGrid(Grid grid) {
+        this.grid = grid;
+        this.sim = new Simulator(grid);
+    }
+
+    public void setWH(WindowHandler wh) {
+        this.wh = wh;
     }
 
 }

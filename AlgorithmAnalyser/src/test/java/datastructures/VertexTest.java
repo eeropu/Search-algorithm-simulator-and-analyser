@@ -33,7 +33,7 @@ public class VertexTest {
         assertEquals(1, v.getX());
         assertEquals(1, v.getY());
         assertEquals(0, v.getDistance());
-        assertEquals("w", v.getState());
+        assertEquals('w', v.getMode());
     }
     
     @Test
@@ -81,7 +81,7 @@ public class VertexTest {
     
     @Test
     public void stateSetter(){
-        v.setState("g");
-        assertEquals("g", v.getState());
+        v.setMode('g');
+        assertEquals('g', v.getMode());
     }
 }

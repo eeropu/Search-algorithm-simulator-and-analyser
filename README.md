@@ -6,6 +6,8 @@ Data structures and algorithms project
 [week_1](https://github.com/eeropu/Search-algorithm-simulator-and-analyser/blob/master/documentation/Weekreports/week_1.md)  
 [week_2](https://github.com/eeropu/Search-algorithm-simulator-and-analyser/blob/master/documentation/Weekreports/week_2.md)  
 [week_3](https://github.com/eeropu/Search-algorithm-simulator-and-analyser/blob/master/documentation/Weekreports/week_3.md)
+
+[week_4](https://github.com/eeropu/Search-algorithm-simulator-and-analyser/blob/master/documentation/Weekreports/week_4.md)
 ### Pit:
 [Pit-report](https://htmlpreview.github.io/?https://github.com/eeropu/Search-algorithm-simulator-and-analyser/blob/master/documentation/pit/index.html)
 ### Checkstyle:

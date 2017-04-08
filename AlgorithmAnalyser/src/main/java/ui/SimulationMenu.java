@@ -27,14 +27,15 @@ public class SimulationMenu extends JPanel{
     private JButton simulate, clear, fill, back, help;
     private JTextField weightText;
     private SimulationMenuListener sml;
-    
 
-    public SimulationMenu() {
+    public SimulationMenu(WindowHandler wh, Grid grid) {
         this.font = new Font("Vredana", Font.BOLD, 18);
         setLayout(null);
         setPreferredSize(new Dimension(256, 640));
         setComponents();
         this.sml = new SimulationMenuListener(jcb, addWeight, setHeuristic, start, goal, wall, weightButton, manhattan, euclidean, octile, chebyshev, yes, no, simulate, clear, fill, back, help, weightText);
+        sml.setGrid(grid);
+        sml.setWH(wh);
         setListener();
     }
     
@@ -133,6 +134,7 @@ public class SimulationMenu extends JPanel{
         yes.setBounds(32, 448, 96, 32);
         this.no = new JRadioButton("No");
         no.setBounds(128, 448, 96, 32);
+        no.setSelected(true);
         ButtonGroup bg = new ButtonGroup();
         bg.add(yes);
         bg.add(no);
@@ -171,5 +173,41 @@ public class SimulationMenu extends JPanel{
         fill.addActionListener(sml);
         back.addActionListener(sml);
         help.addActionListener(sml);
+    }
+
+    public JRadioButton getStart() {
+        return start;
+    }
+
+    public JRadioButton getGoal() {
+        return goal;
+    }
+
+    public JRadioButton getWall() {
+        return wall;
+    }
+
+    public JRadioButton getWeightButton() {
+        return weightButton;
+    }
+
+    public JRadioButton getManhattan() {
+        return manhattan;
+    }
+
+    public JRadioButton getEuclidean() {
+        return euclidean;
+    }
+
+    public JRadioButton getOctile() {
+        return octile;
+    }
+
+    public JRadioButton getChebyshev() {
+        return chebyshev;
+    }
+
+    public JTextField getWeightText() {
+        return weightText;
     }
 }

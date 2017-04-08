@@ -5,6 +5,7 @@ import java.awt.Dimension;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import ui.listeners.MenuListener;
+import ui.listeners.SquareListener;
 
 /**
  *
@@ -23,14 +24,18 @@ public class WindowHandler implements Runnable {
 
         grid = new Grid();
 
+        SimulationMenu sm = new SimulationMenu(this, grid);
+        cardPanel.add(sm, "simulation");
+
+        SquareListener sl = new SquareListener(sm);
+        
+        grid.initializeGrid(sl);
+
         MenuListener ml = new MenuListener(grid, this);
         Menu menu = new Menu(ml);
         cardPanel.add(menu, "menu");
         cl.show(cardPanel, "menu");
-        
-        SimulationMenu sm = new SimulationMenu();
-        cardPanel.add(sm, "simulation");
-        
+
         panel = new JPanel();
         panel.setLayout(null);
         panel.add(grid);
@@ -48,7 +53,11 @@ public class WindowHandler implements Runnable {
         frame.pack();
     }
     
-    public void simulation(){
+    public void mainMenu(){
+        cl.show(cardPanel, "menu");
+    }
+
+    public void simulation() {
         cl.show(cardPanel, "simulation");
     }
 }
