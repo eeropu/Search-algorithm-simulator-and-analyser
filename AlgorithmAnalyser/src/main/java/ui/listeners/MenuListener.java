@@ -8,6 +8,7 @@ import ui.Grid;
 import ui.WindowHandler;
 
 /**
+ * This class gives functionality for the Main menu.
  *
  * @author eerop
  */
@@ -18,6 +19,12 @@ public class MenuListener implements ActionListener {
     private JButton simulate, speedtest, resize;
     private JComboBox<String> dropdown;
 
+    /**
+     * Constructor for this class.
+     *
+     * @param grid reference to the grid.
+     * @param wh reference to the windowhandler.
+     */
     public MenuListener(Grid grid, WindowHandler wh) {
         this.grid = grid;
         this.wh = wh;
@@ -26,13 +33,20 @@ public class MenuListener implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == resize) {
-            grid.resize(Integer.parseInt((String)dropdown.getSelectedItem()));
+            grid.resize(Integer.parseInt((String) dropdown.getSelectedItem()));
             grid.repaint();
-        } else if(e.getSource() == simulate){
+        } else if (e.getSource() == simulate) {
             wh.simulation();
         }
     }
 
+    /**
+     * Sets the buttons.
+     *
+     * @param simulate button
+     * @param speedtest button
+     * @param resize button
+     */
     public void setButtons(JButton simulate, JButton speedtest, JButton resize) {
         this.simulate = simulate;
         this.speedtest = speedtest;

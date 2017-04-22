@@ -1,7 +1,9 @@
 package ui.listeners;
 
-import algorithm.algorithmanalyser.Simulator;
+import algorithms.BestFirstSearch;
 import algorithms.BreadthFirstSearch;
+import algorithms.DepthFirstSearch;
+import algorithms.DijkstraOrAStar;
 import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -15,22 +17,45 @@ import ui.Square;
 import ui.WindowHandler;
 
 /**
+ * This class gives functionality for the Simulation menu.
  *
  * @author eerop
  */
 public class SimulationMenuListener implements ActionListener {
 
-    private JComboBox<String> jcb;
-    private JLabel addWeight, setHeuristic;
-    private JRadioButton start, goal, wall, weightButton;
-    private JRadioButton manhattan, euclidean, octile, chebyshev;
-    private JRadioButton yes, no;
-    private JButton simulate, clear, fill, back, help;
-    private JTextField weightText;
+    private final JComboBox<String> jcb;
+    private final JLabel addWeight, setHeuristic;
+    private final JRadioButton start, goal, wall, weightButton;
+    private final JRadioButton manhattan, euclidean, octile, chebyshev;
+    private final JRadioButton yes, no;
+    private final JButton simulate, clear, fill, back, help;
+    private final JTextField weightText;
     private Grid grid;
     private WindowHandler wh;
-    private Simulator sim;
 
+    /**
+     * Constructor for this class.
+     *
+     * @param jcb javacombobox
+     * @param addWeight jlabel
+     * @param setHeuristic jlabel
+     * @param start radiobutton
+     * @param goal radiobutton
+     * @param wall radiobutton
+     * @param weightButton radiobutton
+     * @param manhattan radiobutton
+     * @param euclidean radiobutton
+     * @param octile radiobutton
+     * @param chebyshev radiobutton
+     * @param yes radiobutton
+     * @param no radiobutton
+     * @param simulate button
+     * @param clear button
+     * @param fill button
+     * @param back button
+     * @param help button
+     * @param weightText textfield
+     */
     public SimulationMenuListener(JComboBox<String> jcb, JLabel addWeight, JLabel setHeuristic,
             JRadioButton start, JRadioButton goal,
             JRadioButton wall, JRadioButton weightButton, JRadioButton manhattan,
@@ -64,30 +89,55 @@ public class SimulationMenuListener implements ActionListener {
         if (jcb.getSelectedItem().equals("A*")) {
             enableWeights(true);
             enableHeuristic(true);
+            if (e.getSource() == simulate) {
+                grid.setWeightsAndHeuristics(getHeuristics());
+                grid.run(new DijkstraOrAStar(grid.getStartOrFinish('s').getV()), yes.isSelected());
+            }
         } else if (jcb.getSelectedItem().equals("Best-first-search")) {
             enableWeights(false);
             enableHeuristic(true);
+            if (e.getSource() == simulate) {
+                grid.setHeauristics(getHeuristics());
+                grid.run(new BestFirstSearch(grid.getStartOrFinish('s').getV()), yes.isSelected());
+            }
         } else if (jcb.getSelectedItem().equals("Breadth-first-search")) {
             enableWeights(false);
             enableHeuristic(false);
             if (e.getSource() == simulate) {
-                sim.bfs(yes.isSelected());
+                grid.run(new BreadthFirstSearch(grid.getStartOrFinish('s').getV()), yes.isSelected());
             }
         } else if (jcb.getSelectedItem().equals("Depth-first-search")) {
             enableWeights(false);
             enableHeuristic(false);
-            if(e.getSource() == simulate){
-                sim.dfs(yes.isSelected());
+            if (e.getSource() == simulate) {
+                grid.run(new DepthFirstSearch(grid.getStartOrFinish('s').getV()), yes.isSelected());
             }
         } else if (jcb.getSelectedItem().equals("Dijkstra")) {
             enableWeights(true);
             enableHeuristic(false);
+            if (e.getSource() == simulate) {
+                grid.setWeights();
+                grid.run(new DijkstraOrAStar(grid.getStartOrFinish('s').getV()), yes.isSelected());
+            }
         }
         if (e.getSource() == clear) {
+            boolean clean = true;
             for (Square[] s : grid.getSquares()) {
                 for (Square s1 : s) {
-                    s1.setBackground(Color.white);
-                    s1.getV().setMode('w');
+                    if (s1.getV().getMode() == 'g' || s1.getV().getMode() == 'd' || s1.getV().getMode() == 'r') {
+                        s1.getV().setMode('w');
+                        s1.getV().refresh();
+                        clean = false;
+                    }
+                }
+            }
+            if (clean) {
+                for (Square[] s : grid.getSquares()) {
+                    for (Square s1 : s) {
+                        s1.setBackground(Color.white);
+                        s1.getV().setMode('w');
+                        s1.setText("");
+                    }
                 }
             }
         } else if (e.getSource() == fill) {
@@ -99,6 +149,20 @@ public class SimulationMenuListener implements ActionListener {
             }
         } else if (e.getSource() == back) {
             wh.mainMenu();
+        }
+    }
+
+    private String getHeuristics() {
+        if (manhattan.isSelected()) {
+            return "manhattan";
+        } else if (euclidean.isSelected()) {
+            return "euclidean";
+        } else if (octile.isSelected()) {
+            return "octile";
+        } else if (chebyshev.isSelected()) {
+            return "chebyshev";
+        } else {
+            return "error";
         }
     }
 
@@ -130,11 +194,9 @@ public class SimulationMenuListener implements ActionListener {
 
     public void setGrid(Grid grid) {
         this.grid = grid;
-        this.sim = new Simulator(grid);
     }
 
     public void setWH(WindowHandler wh) {
         this.wh = wh;
     }
-
 }

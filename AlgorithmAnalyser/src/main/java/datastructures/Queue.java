@@ -52,14 +52,29 @@ public class Queue {
     /*
      Following classes are only for tests!
      */
+    /**
+     * Only for tests.
+     *
+     * @return the heads index.
+     */
     protected int getHead() {
         return head;
     }
 
+    /**
+     * Only for tests.
+     *
+     * @return the tails index.
+     */
     protected int getTail() {
         return tail;
     }
 
+    /**
+     * Only for test.
+     *
+     * @return the array
+     */
     protected Vertex[] getArray() {
         return array;
     }

@@ -6,9 +6,11 @@
 package datastructures;
 
 
+import java.awt.Color;
 import org.junit.Before;
 import org.junit.Test;
 import static org.junit.Assert.*;
+import ui.Square;
 
 /**
  *
@@ -62,7 +64,7 @@ public class VertexTest {
     
     @Test
     public void comparing(){
-        assertEquals(1, v.compareTo(help));
+        assertEquals(-1, v.compareTo(help));
         Vertex goal = new Vertex(5, 4);
         v = new Vertex(1, 1, "euclidean", goal);
         help = new Vertex(4, 5, "euclidean", goal);
@@ -71,6 +73,8 @@ public class VertexTest {
         v.setDistance(-10);
         assertEquals(-1, v.compareTo(help));
         assertEquals(1, help.compareTo(v));
+        assertEquals(-1, v.compareTo(v));
+        assertEquals(1, v.compareTo(null));
     }
     
     @Test
@@ -83,5 +87,30 @@ public class VertexTest {
     public void stateSetter(){
         v.setMode('g');
         assertEquals('g', v.getMode());
+    }
+    
+    @Test
+    public void neighbourlistTest(){
+        assertTrue(v.neighboursFinished());
+        v.addNeighbour(help);
+        assertFalse(v.neighboursFinished());
+        assertEquals(help, v.getNeighbour());
+        assertTrue(v.neighboursFinished());
+    }
+    
+    @Test
+    public void refreshTest(){
+        Square s = new Square(1, 1, 1);
+        s.setV(v);
+        assertEquals(Color.white, s.getBackground());
+        v.setMode('g');
+        v.refresh();
+        assertEquals(Color.lightGray, s.getBackground());
+    }
+    
+    @Test
+    public void previousTest(){
+        v.setPrev(help);
+        assertEquals(help, v.getPrev());
     }
 }

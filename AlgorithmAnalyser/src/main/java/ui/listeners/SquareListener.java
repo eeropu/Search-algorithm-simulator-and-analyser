@@ -7,6 +7,8 @@ import ui.SimulationMenu;
 import ui.Square;
 
 /**
+ * This class makes modifying the grid possible by giving functionality for the
+ * squares.
  *
  * @author eerop
  */
@@ -17,6 +19,11 @@ public class SquareListener implements MouseListener {
     private SimulationMenu sm;
     private Square start, goal;
 
+    /**
+     * Constructor for this class.
+     *
+     * @param sm Simulation menu.
+     */
     public SquareListener(SimulationMenu sm) {
         this.sm = sm;
         isRunning = false;
@@ -43,7 +50,7 @@ public class SquareListener implements MouseListener {
             s.getV().setMode('f');
             s.refresh();
             goal = s;
-        } else if (sm.getWeightButton().isSelected()){
+        } else if (sm.getWeightButton().isSelected()) {
             s.getV().setMode('w');
             s.refresh();
             s.setText(sm.getWeightText().getText());
@@ -95,7 +102,7 @@ public class SquareListener implements MouseListener {
                 @Override
                 public void run() {
                     do {
-
+                        isRunning = true;
                     } while (mousedown);
                     isRunning = false;
                 }

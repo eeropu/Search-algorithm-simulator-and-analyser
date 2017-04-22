@@ -8,6 +8,7 @@ import ui.listeners.MenuListener;
 import ui.listeners.SquareListener;
 
 /**
+ * This class is responsible of what is shown in the programms window.
  *
  * @author eerop
  */
@@ -17,6 +18,9 @@ public class WindowHandler implements Runnable {
     private final JPanel cardPanel, panel;
     private final Grid grid;
 
+    /**
+     * Constructor for this class.
+     */
     public WindowHandler() {
         cl = new CardLayout();
         cardPanel = new JPanel(cl);
@@ -28,7 +32,7 @@ public class WindowHandler implements Runnable {
         cardPanel.add(sm, "simulation");
 
         SquareListener sl = new SquareListener(sm);
-        
+
         grid.initializeGrid(sl);
 
         MenuListener ml = new MenuListener(grid, this);
@@ -52,11 +56,17 @@ public class WindowHandler implements Runnable {
         frame.add(panel);
         frame.pack();
     }
-    
-    public void mainMenu(){
+
+    /**
+     * Shows the main menu.
+     */
+    public void mainMenu() {
         cl.show(cardPanel, "menu");
     }
 
+    /**
+     * Shows the simulation menu.
+     */
     public void simulation() {
         cl.show(cardPanel, "simulation");
     }

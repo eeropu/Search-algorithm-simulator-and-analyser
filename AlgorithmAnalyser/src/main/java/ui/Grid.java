@@ -1,13 +1,20 @@
 package ui;
 
+import algorithms.Algorithm;
+import datastructures.Vertex;
 import java.awt.Color;
 import java.awt.Dimension;
-import java.awt.Graphics;
+import java.awt.event.ActionEvent;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.Timer;
 import ui.listeners.SquareListener;
 
 /**
+ * This class is used to represent the graph that is used with the search
+ * algorithm. It works as a link between the graphs funktionality and the
+ * userinterface.
  *
  * @author eerop
  */
@@ -16,7 +23,11 @@ public class Grid extends JPanel {
     private int size;
     private Square[][] squares;
     private SquareListener sl;
+    private Timer timer;
 
+    /**
+     * Constructor for this class.
+     */
     public Grid() {
         setPreferredSize(new Dimension(960, 640));
         setBounds(0, 0, 960, 640);
@@ -26,6 +37,11 @@ public class Grid extends JPanel {
         squares = new Square[size][20];
     }
 
+    /**
+     * Changes the amount of squares in this grid.
+     *
+     * @param x the amount of squares vertically.
+     */
     public void resize(int x) {
         size = x;
         x = (int) (size / 1.5);
@@ -50,16 +66,87 @@ public class Grid extends JPanel {
         }
     }
 
+    /**
+     * Adds a heuristic value to the vertices.
+     *
+     * @param s tells the method which heuristic is going to be used.
+     */
+    public void setHeauristics(String s) {
+        if (s.equals("error")) {
+            JOptionPane.showMessageDialog(this, "Select heuristic!", "error", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+        Square finish = getStartOrFinish('f');
+        Vertex finishVertex = new Vertex(finish.getXcoor(), finish.getYcoor());
+        finish.setV(finishVertex);
+        for (Square[] square : squares) {
+            for (Square square1 : square) {
+                if (square1 != finish) {
+                    square1.setV(new Vertex(square1.getXcoor(), square1.getYcoor(), s, finishVertex));
+                }
+            }
+        }
+    }
+
+    /**
+     * Sets weights to the vertices.
+     */
+    public void setWeights() {
+        for (Square[] square : squares) {
+            for (Square square1 : square) {
+                try {
+                    int i = Integer.parseInt(square1.getText());
+                    square1.setV(new Vertex(square1.getXcoor(), square1.getYcoor(), i));
+                } catch (NumberFormatException e) {
+                    square1.setV(new Vertex(square1.getXcoor(), square1.getYcoor(), 1));
+                }
+            }
+        }
+    }
+
+    /**
+     * Sets weights and heuristics to the vertices.
+     *
+     * @param s tells the method which heuristic is going to be used.
+     */
+    public void setWeightsAndHeuristics(String s) {
+        if (s.equals("error")) {
+            JOptionPane.showMessageDialog(this, "Select heuristic!", "error", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+        Square finish = getStartOrFinish('f');
+        Vertex finishVertex = new Vertex(finish.getXcoor(), finish.getYcoor(), 0, s, finish.getV());
+        finish.setV(finishVertex);
+        for (Square[] square : squares) {
+            for (Square q : square) {
+                int i = 1;
+                try {
+                    i = Integer.parseInt(q.getText());
+                } catch (NumberFormatException e) {
+                }
+                if (q != finish) {
+                    q.setV(new Vertex(q.getXcoor(), q.getYcoor(), i, s, finishVertex));
+                }
+            }
+        }
+    }
+
     public Square[][] getSquares() {
         return squares;
     }
 
+    /**
+     * Sets the SquareListener sl for this grid and passes it on for the
+     * squares.
+     *
+     * @param sl squarelistener
+     */
     public void initializeGrid(SquareListener sl) {
         this.sl = sl;
         setSquares();
     }
 
-    public void initializeSquares() {
+    private void initializeSquares() {
         for (int i = 0; i < squares.length; i++) {
             for (int j = 0; j < squares[i].length; j++) {
                 if (i != 0 && squares[i - 1][j].getV().getMode() != 'b') {
@@ -78,7 +165,7 @@ public class Grid extends JPanel {
         }
     }
 
-    public void initializeSquaresWithDiagonals() {
+    private void initializeSquaresWithDiagonals() {
         initializeSquares();
         for (int i = 0; i < squares.length; i++) {
             for (int j = 0; j < squares[i].length; j++) {
@@ -102,16 +189,57 @@ public class Grid extends JPanel {
         }
     }
 
-    public Square getStart() {
+    /**
+     * Used to get the start or finish vertices of this graph.
+     *
+     * @param c tells which of the vertices is being fetched.
+     * @return the startvertex if c = s and finish if c = f.
+     */
+    public Square getStartOrFinish(char c) {
         Square s = null;
         for (Square[] square : squares) {
             for (Square square1 : square) {
-                if (square1.getV().getMode() == 's') {
-                    s = square1;
+                if (square1.getV().getMode() == c) {
+                    return square1;
                 }
             }
         }
         return s;
+    }
+
+    /**
+     * Runs a searchalgorithm for this graph.
+     *
+     * @param a the searchalgorithm being used.
+     * @param diagonal tells if it is allowed to move diagonally in the grid.
+     */
+    public void run(Algorithm a, boolean diagonal) {
+        if (diagonal) {
+            initializeSquaresWithDiagonals();
+        } else {
+            initializeSquares();
+        }
+        timer = initializeSimulationTimer(a);
+        timer.start();
+    }
+
+    private Timer initializeSimulationTimer(Algorithm a) {
+        return new Timer(20, (ActionEvent e) -> {
+            if (a.currentReady()) {
+                if (a.done()) {
+                    a.getRoute();
+                    stop();
+                } else {
+                    a.next();
+                }
+            }
+            a.run();
+            repaint();
+        });
+    }
+
+    private void stop() {
+        timer.stop();
     }
 
 }

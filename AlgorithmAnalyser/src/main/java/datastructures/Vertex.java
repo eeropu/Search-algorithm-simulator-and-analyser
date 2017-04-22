@@ -30,6 +30,7 @@ public class Vertex implements Comparable<Vertex> {
         this.y = y;
         this.distance = 0;
         this.mode = 'w';
+        this.heuristic = 0;
     }
 
     /**
@@ -93,27 +94,54 @@ public class Vertex implements Comparable<Vertex> {
 
     @Override
     public int compareTo(Vertex v) {
-        if ((this.heuristic + this.distance) < (v.heuristic + v.distance)) {
-            return -1;
-        } else {
+        try {
+            if ((this.heuristic + this.distance) <= (v.getHeuristic() + v.getDistance())) {
+                return -1;
+            } else if (this == v) {
+                return 0;
+            } else {
+                return 1;
+            }
+        } catch (NullPointerException e) {
             return 1;
         }
     }
-    
-    public void addNeighbour(Vertex v){
+
+    /**
+     * Adds a new vertex to the neighbourslist.
+     *
+     * @param v the vertex to be added.
+     */
+    public void addNeighbour(Vertex v) {
         neighbours.insert(v);
     }
-    
-    public Vertex getNeighbour(){
+
+    /**
+     * Returns and removes a vertex from the neighbourslist.
+     *
+     * @return a vertex
+     */
+    public Vertex getNeighbour() {
         return neighbours.remove();
     }
-    
-    public void refresh(){
+
+    /**
+     * Used to know if all of the neighbourvertices has been removed.
+     *
+     * @return true if neighbourslist is empty, else false.
+     */
+    public boolean neighboursFinished() {
+        return this.neighbours.isEmpty();
+    }
+
+    /**
+     * Updates the UI's square's, that represents this vertex, color.
+     */
+    public void refresh() {
         s.refresh();
     }
-    
-    //Getters and Setters
 
+    //Getters and Setters
     public int getX() {
         return x;
     }
@@ -145,16 +173,16 @@ public class Vertex implements Comparable<Vertex> {
     public void setMode(char mode) {
         this.mode = mode;
     }
-    
-    public void setS(Square s){
+
+    public void setS(Square s) {
         this.s = s;
     }
-    
-    public void setPrev(Vertex v){
+
+    public void setPrev(Vertex v) {
         this.prev = v;
     }
-    
-    public Vertex getPrev(){
+
+    public Vertex getPrev() {
         return prev;
     }
 }

@@ -50,10 +50,20 @@ public class Stack {
     /*
      Following classes are only used for tests
      */
+    /**
+     * Only for tests.
+     *
+     * @return the top index.
+     */
     protected int getTop() {
         return top;
     }
 
+    /**
+     * Only for tests.
+     *
+     * @return the array.
+     */
     protected Vertex[] getArray() {
         return array;
     }
