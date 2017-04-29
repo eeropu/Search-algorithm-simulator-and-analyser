@@ -10,14 +10,15 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JRadioButton;
 import javax.swing.JTextField;
-import ui.listeners.SimulationMenuListener;
+import ui.listeners.SpeedTestWindowOpener;
+import ui.listeners.SubMenuListener;
 
 /**
  * This class is used to create the Simulation menu.
  *
  * @author eerop
  */
-public class SimulationMenu extends JPanel {
+public class SubMenu extends JPanel {
 
     private JComboBox<String> jcb;
     private final Font font;
@@ -25,9 +26,13 @@ public class SimulationMenu extends JPanel {
     private JRadioButton start, goal, wall, weightButton;
     private JRadioButton manhattan, euclidean, octile, chebyshev;
     private JRadioButton yes, no;
-    private JButton simulate, clear, fill, back, help;
+    private JButton clear, fill, back, help;
     private JTextField weightText;
-    private SimulationMenuListener sml;
+    private final SubMenuListener sml;
+    private final SpeedTestWindowOpener stwo;
+    private JButton activate;
+    private JLabel speed;
+    private JTextField speedSetter;
 
     /**
      * Constructor for this class.
@@ -35,15 +40,17 @@ public class SimulationMenu extends JPanel {
      * @param wh reference to the windowhandler
      * @param grid reference to the grid
      */
-    public SimulationMenu(WindowHandler wh, Grid grid) {
-        this.font = new Font("Vredana", Font.BOLD, 18);
+    public SubMenu(WindowHandler wh, Grid grid) {
+        this.font = new Font("Verdana", Font.BOLD, 18);
         setLayout(null);
         setPreferredSize(new Dimension(256, 640));
         setComponents();
-        this.sml = new SimulationMenuListener(jcb, addWeight, setHeuristic, start, goal, wall, weightButton, manhattan, euclidean, octile, chebyshev, yes, no, simulate, clear, fill, back, help, weightText);
+        this.sml = new SubMenuListener(jcb, addWeight, setHeuristic, start, goal, wall, weightButton, manhattan, euclidean, octile, chebyshev, yes, no, activate, clear, fill, back, help, weightText);
+        this.stwo = new SpeedTestWindowOpener(activate);
         sml.setGrid(grid);
         sml.setWH(wh);
         setListener();
+        setSpeed();
     }
 
     private void setComponents() {
@@ -108,17 +115,17 @@ public class SimulationMenu extends JPanel {
     private void selectHeuristic() {
         this.setHeuristic = new JLabel("Set Heuristic:");
         setHeuristic.setFont(font);
-        setHeuristic.setBounds(32, 288, 192, 32);
+        setHeuristic.setBounds(32, 268, 192, 32);
         add(setHeuristic);
 
         this.manhattan = new JRadioButton("Manhattan");
-        manhattan.setBounds(32, 320, 192, 20);
+        manhattan.setBounds(32, 300, 192, 20);
         this.euclidean = new JRadioButton("Euclidean");
-        euclidean.setBounds(32, 340, 192, 20);
+        euclidean.setBounds(32, 320, 192, 20);
         this.octile = new JRadioButton("Octile");
-        octile.setBounds(32, 360, 192, 20);
+        octile.setBounds(32, 340, 192, 20);
         this.chebyshev = new JRadioButton("Chebyshev");
-        chebyshev.setBounds(32, 380, 192, 20);
+        chebyshev.setBounds(32, 360, 192, 20);
 
         ButtonGroup bg = new ButtonGroup();
         bg.add(manhattan);
@@ -134,13 +141,13 @@ public class SimulationMenu extends JPanel {
     private void allowDiagonal() {
         this.allow = new JLabel("Allow Diagonal:");
         allow.setFont(font);
-        allow.setBounds(32, 416, 192, 32);
+        allow.setBounds(32, 384, 192, 32);
         add(allow);
 
         this.yes = new JRadioButton("Yes");
-        yes.setBounds(32, 448, 96, 32);
+        yes.setBounds(32, 412, 96, 32);
         this.no = new JRadioButton("No");
-        no.setBounds(128, 448, 96, 32);
+        no.setBounds(128, 412, 96, 32);
         no.setSelected(true);
         ButtonGroup bg = new ButtonGroup();
         bg.add(yes);
@@ -148,12 +155,23 @@ public class SimulationMenu extends JPanel {
         add(yes);
         add(no);
     }
+    
+    private void setSpeed(){
+        speed = new JLabel("Set speed:");
+        speed.setFont(font);
+        speed.setBounds(32, 448, 128, 32);
+        add(speed);
+        speedSetter = new JTextField("20");
+        speedSetter.setBounds(160, 448, 64, 32);
+        sml.setSpeedSetter(speedSetter);
+        add(speedSetter);
+    }
 
     private void setButtons() {
-        this.simulate = new JButton("Simulate");
-        simulate.setFont(font);
-        simulate.setBounds(32, 496, 196, 32);
-        add(simulate);
+        this.activate = new JButton("Simulate");
+        activate.setFont(font);
+        activate.setBounds(32, 496, 196, 32);
+        add(activate);
         this.clear = new JButton("Clear");
         clear.setBounds(48, 544, 64, 32);
         add(clear);
@@ -175,11 +193,38 @@ public class SimulationMenu extends JPanel {
 
     private void setListener() {
         jcb.addActionListener(sml);
-        simulate.addActionListener(sml);
         clear.addActionListener(sml);
         fill.addActionListener(sml);
         back.addActionListener(sml);
         help.addActionListener(sml);
+    }
+    
+    public void simulationMenu(){
+        add(jcb);
+        add(setHeuristic);
+        add(manhattan);
+        add(euclidean);
+        add(octile);
+        add(chebyshev);
+        add(speedSetter);
+        add(speed);
+        activate.setText("Simulate");
+        activate.removeActionListener(stwo);
+        activate.addActionListener(sml);
+    }
+    
+    public void speedTestMenu(){
+        remove(jcb);
+        remove(setHeuristic);
+        remove(manhattan);
+        remove(euclidean);
+        remove(octile);
+        remove(chebyshev);
+        remove(speedSetter);
+        remove(speed);
+        activate.setText("Run tests");
+        activate.removeActionListener(sml);
+        activate.addActionListener(stwo);
     }
 
     public JRadioButton getStart() {

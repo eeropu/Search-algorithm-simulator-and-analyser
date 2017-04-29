@@ -10,8 +10,8 @@ import ui.Square;
  */
 public class Vertex implements Comparable<Vertex> {
 
-    private int x, y, weight, distance;
-    private double heuristic;
+    private int x, y, weight;
+    private double distance, heuristic;
     private char mode;
     private LinkedList neighbours;
     private Square s;
@@ -158,7 +158,7 @@ public class Vertex implements Comparable<Vertex> {
         return heuristic;
     }
 
-    public int getDistance() {
+    public double getDistance() {
         return distance;
     }
 
@@ -166,7 +166,7 @@ public class Vertex implements Comparable<Vertex> {
         return mode;
     }
 
-    public void setDistance(int distance) {
+    public void setDistance(double distance) {
         this.distance = distance;
     }
 

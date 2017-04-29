@@ -34,24 +34,28 @@ public class DijkstraOrAStar extends AlgorithmBase {
         if (a == null) {
             return;
         }
+        double i = 1;
+        if (a.getX() != current.getX() && a.getY() != current.getY()) {
+            i = Math.sqrt(2);
+        }
         if (a.getMode() == 'w') {
             a.setMode('g');
             a.refresh();
             a.setPrev(current);
             if (a.getWeight() >= 0) {
-                a.setDistance(current.getDistance() + a.getWeight());
+                a.setDistance(current.getDistance() + i * a.getWeight());
             } else {
-                a.setDistance(current.getDistance() + 1);
+                a.setDistance(current.getDistance() + i);
             }
             h.insert(a);
         } else if (a.getMode() == 'g') {
-            if (a.getWeight() >= 0 && a.getDistance() > current.getDistance() + a.getWeight()) {
+            if (a.getWeight() >= 0 && a.getDistance() > current.getDistance() + i * a.getWeight()) {
                 a.setPrev(current);
-                a.setDistance(current.getDistance() + a.getWeight());
+                a.setDistance(current.getDistance() + i * a.getWeight());
                 h.insert(a);
-            } else if (a.getWeight() < 0 && a.getDistance() > current.getDistance() + 1) {
+            } else if (a.getWeight() < 0 && a.getDistance() > current.getDistance() + i) {
                 a.setPrev(current);
-                a.setDistance(current.getDistance() + 1);
+                a.setDistance(current.getDistance() + i);
                 h.insert(a);
             }
         } else if (a.getMode() == 'f') {
@@ -59,17 +63,17 @@ public class DijkstraOrAStar extends AlgorithmBase {
                 this.f = a;
                 a.setPrev(current);
                 if (a.getWeight() >= 0) {
-                    a.setDistance(current.getDistance() + a.getWeight());
+                    a.setDistance(current.getDistance() + i * a.getWeight());
                 } else {
-                    a.setDistance(current.getDistance() + 1);
+                    a.setDistance(current.getDistance() + i);
                 }
                 h.insert(a);
-            } else if (a.getWeight() >= 0 && a.getDistance() > current.getDistance() + a.getWeight()) {
-                a.setDistance(current.getDistance() + a.getWeight());
+            } else if (a.getWeight() >= 0 && a.getDistance() > current.getDistance() + i * a.getWeight()) {
+                a.setDistance(current.getDistance() + i * a.getWeight());
                 a.setPrev(current);
                 h.insert(a);
-            } else if (a.getWeight() < 0 && a.getDistance() > current.getDistance() + 1) {
-                a.setDistance(current.getDistance() + 1);
+            } else if (a.getWeight() < 0 && a.getDistance() > current.getDistance() + i) {
+                a.setDistance(current.getDistance() + i);
                 a.setPrev(current);
                 h.insert(a);
             }

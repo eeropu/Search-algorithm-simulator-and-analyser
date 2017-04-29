@@ -5,11 +5,16 @@ import algorithms.BreadthFirstSearch;
 import algorithms.DepthFirstSearch;
 import algorithms.DijkstraOrAStar;
 import java.awt.Color;
+import java.awt.Desktop;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.IOException;
+import java.net.URI;
+import java.net.URISyntaxException;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JRadioButton;
 import javax.swing.JTextField;
 import ui.Grid;
@@ -21,7 +26,7 @@ import ui.WindowHandler;
  *
  * @author eerop
  */
-public class SimulationMenuListener implements ActionListener {
+public class SubMenuListener implements ActionListener {
 
     private final JComboBox<String> jcb;
     private final JLabel addWeight, setHeuristic;
@@ -30,6 +35,7 @@ public class SimulationMenuListener implements ActionListener {
     private final JRadioButton yes, no;
     private final JButton simulate, clear, fill, back, help;
     private final JTextField weightText;
+    private JTextField speedSetter;
     private Grid grid;
     private WindowHandler wh;
 
@@ -56,7 +62,7 @@ public class SimulationMenuListener implements ActionListener {
      * @param help button
      * @param weightText textfield
      */
-    public SimulationMenuListener(JComboBox<String> jcb, JLabel addWeight, JLabel setHeuristic,
+    public SubMenuListener(JComboBox<String> jcb, JLabel addWeight, JLabel setHeuristic,
             JRadioButton start, JRadioButton goal,
             JRadioButton wall, JRadioButton weightButton, JRadioButton manhattan,
             JRadioButton euclidean, JRadioButton octile, JRadioButton chebyshev,
@@ -86,38 +92,45 @@ public class SimulationMenuListener implements ActionListener {
 
     @Override
     public void actionPerformed(ActionEvent e) {
+        int i = 20;
+        try {
+            i = Integer.parseInt(speedSetter.getText());
+        } catch (NumberFormatException ex) {
+        }
         if (jcb.getSelectedItem().equals("A*")) {
             enableWeights(true);
             enableHeuristic(true);
             if (e.getSource() == simulate) {
-                grid.setWeightsAndHeuristics(getHeuristics());
-                grid.run(new DijkstraOrAStar(grid.getStartOrFinish('s').getV()), yes.isSelected());
+                if (grid.setWeightsAndHeuristics(getHeuristics())) {
+                    grid.run(new DijkstraOrAStar(grid.getStartOrFinish('s').getV()), yes.isSelected(), i);
+                }
             }
         } else if (jcb.getSelectedItem().equals("Best-first-search")) {
             enableWeights(false);
             enableHeuristic(true);
             if (e.getSource() == simulate) {
-                grid.setHeauristics(getHeuristics());
-                grid.run(new BestFirstSearch(grid.getStartOrFinish('s').getV()), yes.isSelected());
+                if (grid.setHeauristics(getHeuristics())) {
+                    grid.run(new BestFirstSearch(grid.getStartOrFinish('s').getV()), yes.isSelected(), i);
+                }
             }
         } else if (jcb.getSelectedItem().equals("Breadth-first-search")) {
             enableWeights(false);
             enableHeuristic(false);
             if (e.getSource() == simulate) {
-                grid.run(new BreadthFirstSearch(grid.getStartOrFinish('s').getV()), yes.isSelected());
+                grid.run(new BreadthFirstSearch(grid.getStartOrFinish('s').getV()), yes.isSelected(), i);
             }
         } else if (jcb.getSelectedItem().equals("Depth-first-search")) {
             enableWeights(false);
             enableHeuristic(false);
             if (e.getSource() == simulate) {
-                grid.run(new DepthFirstSearch(grid.getStartOrFinish('s').getV()), yes.isSelected());
+                grid.run(new DepthFirstSearch(grid.getStartOrFinish('s').getV()), yes.isSelected(), i);
             }
         } else if (jcb.getSelectedItem().equals("Dijkstra")) {
             enableWeights(true);
             enableHeuristic(false);
             if (e.getSource() == simulate) {
                 grid.setWeights();
-                grid.run(new DijkstraOrAStar(grid.getStartOrFinish('s').getV()), yes.isSelected());
+                grid.run(new DijkstraOrAStar(grid.getStartOrFinish('s').getV()), yes.isSelected(), i);
             }
         }
         if (e.getSource() == clear) {
@@ -149,6 +162,14 @@ public class SimulationMenuListener implements ActionListener {
             }
         } else if (e.getSource() == back) {
             wh.mainMenu();
+        } else if (e.getSource() == help) {
+            if (Desktop.isDesktopSupported()) {
+                try {
+                    Desktop.getDesktop().browse(new URI("www.github.com/eeropu/Search-algorithm-simulator-and-analyser"));
+                } catch (IOException | URISyntaxException ex) {
+                    JOptionPane.showMessageDialog(null, "Go to www.github.com/eeropu/Search-algorithm-simulator-and-analyser for instructions", "Failed to open browser", JOptionPane.INFORMATION_MESSAGE);
+                }
+            }
         }
     }
 
@@ -198,5 +219,9 @@ public class SimulationMenuListener implements ActionListener {
 
     public void setWH(WindowHandler wh) {
         this.wh = wh;
+    }
+
+    public void setSpeedSetter(JTextField speedSetter) {
+        this.speedSetter = speedSetter;
     }
 }

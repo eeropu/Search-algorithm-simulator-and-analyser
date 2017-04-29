@@ -17,6 +17,8 @@ public class WindowHandler implements Runnable {
     private final CardLayout cl;
     private final JPanel cardPanel, panel;
     private final Grid grid;
+    private final SubMenu sm;
+    private final SquareListener sl;
 
     /**
      * Constructor for this class.
@@ -28,10 +30,10 @@ public class WindowHandler implements Runnable {
 
         grid = new Grid();
 
-        SimulationMenu sm = new SimulationMenu(this, grid);
+        sm = new SubMenu(this, grid);
         cardPanel.add(sm, "simulation");
 
-        SquareListener sl = new SquareListener(sm);
+        sl = new SquareListener(sm);
 
         grid.initializeGrid(sl);
 
@@ -68,6 +70,16 @@ public class WindowHandler implements Runnable {
      * Shows the simulation menu.
      */
     public void simulation() {
+        sm.simulationMenu();
+        cl.show(cardPanel, "simulation");
+        
+    }
+
+    /**
+     * Shows the speedtest menu.
+     */
+    public void speedTest() {
+        sm.speedTestMenu();
         cl.show(cardPanel, "simulation");
     }
 }

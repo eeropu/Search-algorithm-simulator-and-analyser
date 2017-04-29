@@ -70,11 +70,12 @@ public class Grid extends JPanel {
      * Adds a heuristic value to the vertices.
      *
      * @param s tells the method which heuristic is going to be used.
+     * @return false if there is no heuristic selected, else true
      */
-    public void setHeauristics(String s) {
+    public boolean setHeauristics(String s) {
         if (s.equals("error")) {
             JOptionPane.showMessageDialog(this, "Select heuristic!", "error", JOptionPane.ERROR_MESSAGE);
-            return;
+            return false;
         }
         Square finish = getStartOrFinish('f');
         Vertex finishVertex = new Vertex(finish.getXcoor(), finish.getYcoor());
@@ -86,6 +87,7 @@ public class Grid extends JPanel {
                 }
             }
         }
+        return true;
     }
 
     /**
@@ -108,11 +110,12 @@ public class Grid extends JPanel {
      * Sets weights and heuristics to the vertices.
      *
      * @param s tells the method which heuristic is going to be used.
+     * @return false if there is no heuristic selected, else true
      */
-    public void setWeightsAndHeuristics(String s) {
+    public boolean setWeightsAndHeuristics(String s) {
         if (s.equals("error")) {
             JOptionPane.showMessageDialog(this, "Select heuristic!", "error", JOptionPane.ERROR_MESSAGE);
-            return;
+            return false;
         }
         Square finish = getStartOrFinish('f');
         Vertex finishVertex = new Vertex(finish.getXcoor(), finish.getYcoor(), 0, s, finish.getV());
@@ -129,6 +132,7 @@ public class Grid extends JPanel {
                 }
             }
         }
+        return true;
     }
 
     public Square[][] getSquares() {
@@ -212,19 +216,20 @@ public class Grid extends JPanel {
      *
      * @param a the searchalgorithm being used.
      * @param diagonal tells if it is allowed to move diagonally in the grid.
+     * @param i the speed that algorithm runs in milliseconds.
      */
-    public void run(Algorithm a, boolean diagonal) {
+    public void run(Algorithm a, boolean diagonal, int i) {
         if (diagonal) {
             initializeSquaresWithDiagonals();
         } else {
             initializeSquares();
         }
-        timer = initializeSimulationTimer(a);
+        timer = initializeSimulationTimer(a, i);
         timer.start();
     }
 
-    private Timer initializeSimulationTimer(Algorithm a) {
-        return new Timer(20, (ActionEvent e) -> {
+    private Timer initializeSimulationTimer(Algorithm a, int i) {
+        return new Timer(i, (ActionEvent e) -> {
             if (a.currentReady()) {
                 if (a.done()) {
                     a.getRoute();

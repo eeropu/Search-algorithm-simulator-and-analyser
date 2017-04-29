@@ -34,7 +34,7 @@ public class VertexTest {
     public void basicConstructor(){
         assertEquals(1, v.getX());
         assertEquals(1, v.getY());
-        assertEquals(0, v.getDistance());
+        assertEquals(0, v.getDistance(), 0.1);
         assertEquals('w', v.getMode());
     }
     
@@ -80,7 +80,7 @@ public class VertexTest {
     @Test
     public void distanceSetter(){
         v.setDistance(1);
-        assertEquals(1, v.getDistance());
+        assertEquals(1, v.getDistance(), 0.1);
     }
     
     @Test

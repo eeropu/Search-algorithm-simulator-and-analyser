@@ -3,7 +3,7 @@ package ui.listeners;
 import java.awt.Color;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
-import ui.SimulationMenu;
+import ui.SubMenu;
 import ui.Square;
 
 /**
@@ -16,7 +16,7 @@ public class SquareListener implements MouseListener {
 
     volatile private boolean isRunning, mousedown;
     private char mode;
-    private SimulationMenu sm;
+    private SubMenu sm;
     private Square start, goal;
 
     /**
@@ -24,7 +24,7 @@ public class SquareListener implements MouseListener {
      *
      * @param sm Simulation menu.
      */
-    public SquareListener(SimulationMenu sm) {
+    public SquareListener(SubMenu sm) {
         this.sm = sm;
         isRunning = false;
     }
@@ -117,6 +117,22 @@ public class SquareListener implements MouseListener {
             s.getV().setMode('w');
         }
         s.refresh();
+    }
+
+    public void setStart(Square start) {
+        this.start = start;
+    }
+
+    public void setGoal(Square goal) {
+        this.goal = goal;
+    }
+
+    public Square getStart() {
+        return start;
+    }
+
+    public Square getGoal() {
+        return goal;
     }
 
 }

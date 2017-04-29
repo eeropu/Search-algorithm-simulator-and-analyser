@@ -37,6 +37,8 @@ public class MenuListener implements ActionListener {
             grid.repaint();
         } else if (e.getSource() == simulate) {
             wh.simulation();
+        } else if (e.getSource() == speedtest) {
+            wh.speedTest();
         }
     }
 
