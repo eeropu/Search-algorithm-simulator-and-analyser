@@ -100,7 +100,7 @@ public class SubMenuListener implements ActionListener {
         if (jcb.getSelectedItem().equals("A*")) {
             enableWeights(true);
             enableHeuristic(true);
-            if (e.getSource() == simulate) {
+            if (e.getSource() == simulate && startAndFinishAreSelected()) {
                 if (grid.setWeightsAndHeuristics(getHeuristics())) {
                     grid.run(new DijkstraOrAStar(grid.getStartOrFinish('s').getV()), yes.isSelected(), i);
                 }
@@ -108,7 +108,7 @@ public class SubMenuListener implements ActionListener {
         } else if (jcb.getSelectedItem().equals("Best-first-search")) {
             enableWeights(false);
             enableHeuristic(true);
-            if (e.getSource() == simulate) {
+            if (e.getSource() == simulate && startAndFinishAreSelected()) {
                 if (grid.setHeauristics(getHeuristics())) {
                     grid.run(new BestFirstSearch(grid.getStartOrFinish('s').getV()), yes.isSelected(), i);
                 }
@@ -116,19 +116,19 @@ public class SubMenuListener implements ActionListener {
         } else if (jcb.getSelectedItem().equals("Breadth-first-search")) {
             enableWeights(false);
             enableHeuristic(false);
-            if (e.getSource() == simulate) {
+            if (e.getSource() == simulate && startAndFinishAreSelected()) {
                 grid.run(new BreadthFirstSearch(grid.getStartOrFinish('s').getV()), yes.isSelected(), i);
             }
         } else if (jcb.getSelectedItem().equals("Depth-first-search")) {
             enableWeights(false);
             enableHeuristic(false);
-            if (e.getSource() == simulate) {
+            if (e.getSource() == simulate && startAndFinishAreSelected()) {
                 grid.run(new DepthFirstSearch(grid.getStartOrFinish('s').getV()), yes.isSelected(), i);
             }
         } else if (jcb.getSelectedItem().equals("Dijkstra")) {
             enableWeights(true);
             enableHeuristic(false);
-            if (e.getSource() == simulate) {
+            if (e.getSource() == simulate && startAndFinishAreSelected()) {
                 grid.setWeights();
                 grid.run(new DijkstraOrAStar(grid.getStartOrFinish('s').getV()), yes.isSelected(), i);
             }
@@ -211,6 +211,14 @@ public class SubMenuListener implements ActionListener {
         } else {
             setHeuristic.setForeground(Color.lightGray);
         }
+    }
+    
+    private boolean startAndFinishAreSelected(){
+        boolean b = grid.getStartOrFinish('s') != null && grid.getStartOrFinish('f') != null;
+        if(!b){
+            JOptionPane.showMessageDialog(null, "Grid needs to have start and finish!", "ERROR", JOptionPane.ERROR_MESSAGE);
+        }
+        return b;
     }
 
     public void setGrid(Grid grid) {

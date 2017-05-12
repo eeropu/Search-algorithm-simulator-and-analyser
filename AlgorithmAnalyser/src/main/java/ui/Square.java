@@ -38,13 +38,14 @@ public class Square extends JLabel {
      * @param v a vertex
      */
     public void setV(Vertex v) {
+        char c = this.v.getMode();
         this.v = v;
         v.setS(this);
-        if (this.getBackground() == Color.green) {
+        if (c == 's') {
             v.setMode('s');
-        } else if (this.getBackground() == Color.red) {
+        } else if (c == 'f') {
             v.setMode('f');
-        } else if (this.getBackground() == Color.black) {
+        } else if (c == 'b') {
             v.setMode('b');
         }
     }

@@ -36,6 +36,23 @@ public class BreadthFirstSearch extends AlgorithmBase {
             a.setMode('g');
             a.refresh();
             a.setPrev(current);
+            if (a.getX() != current.getX() && a.getY() != current.getY()) {
+                a.setDistance(current.getDistance() + Math.sqrt(2));
+            } else {
+                a.setDistance(current.getDistance() + 1);
+            }
+        } else if (a.getMode() == 'g') {
+            if (a.getX() != current.getX() && a.getY() != current.getY()) {
+                if (a.getDistance() > current.getDistance() + Math.sqrt(2)) {
+                    a.setPrev(current);
+                    a.setDistance(current.getDistance() + Math.sqrt(2));
+                }
+            } else {
+                if (a.getDistance() > current.getDistance() + 1) {
+                    a.setPrev(current);
+                    a.setDistance(current.getDistance() + 1);
+                }
+            }
         } else if (a.getMode() == 'f') {
             a.setPrev(current);
             this.f = a;
@@ -46,8 +63,10 @@ public class BreadthFirstSearch extends AlgorithmBase {
 
     @Override
     public void next() {
-        current.setMode('d');
-        current.refresh();
+        if (current.getMode() != 's') {
+            current.setMode('d');
+            current.refresh();
+        }
         this.current = q.dequeue();
     }
 

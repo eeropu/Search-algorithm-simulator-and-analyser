@@ -46,7 +46,7 @@ public class SubMenu extends JPanel {
         setPreferredSize(new Dimension(256, 640));
         setComponents();
         this.sml = new SubMenuListener(jcb, addWeight, setHeuristic, start, goal, wall, weightButton, manhattan, euclidean, octile, chebyshev, yes, no, activate, clear, fill, back, help, weightText);
-        this.stwo = new SpeedTestWindowOpener(activate);
+        this.stwo = new SpeedTestWindowOpener(activate, grid, yes);
         sml.setGrid(grid);
         sml.setWH(wh);
         setListener();

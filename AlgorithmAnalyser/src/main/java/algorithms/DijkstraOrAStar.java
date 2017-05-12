@@ -82,8 +82,12 @@ public class DijkstraOrAStar extends AlgorithmBase {
 
     @Override
     public void next() {
-        current.setMode('d');
-        current.refresh();
+        if (current.getMode() != 's') {
+            current.setMode('d');
+            current.refresh();
+        } else {
+            current = h.delMin();
+        }
         while (current.getMode() == 'd') {
             current = h.delMin();
         }

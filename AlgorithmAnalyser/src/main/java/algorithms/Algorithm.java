@@ -1,7 +1,5 @@
 package algorithms;
 
-import datastructures.Vertex;
-
 /**
  * All search algorithms will implement this interface.
  *

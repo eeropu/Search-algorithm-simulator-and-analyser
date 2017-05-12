@@ -6,6 +6,7 @@ import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import ui.Grid;
 
 /**
  *
@@ -17,8 +18,9 @@ public class AlgorithmSelection extends JPanel {
             BOctile, BChebyshev, Breadth, Depth, Dijkstra;
     private JButton ready;
     private Font heuristics, algorithms;
+    private TestRunner tr;
 
-    public AlgorithmSelection() {
+    public AlgorithmSelection(TestRunner tr) {
         this.setLayout(null);
         this.setPreferredSize(new Dimension(960, 544));
         setFonts();
@@ -26,6 +28,11 @@ public class AlgorithmSelection extends JPanel {
         setPositionings();
         addComponents();
         addLabels();
+        
+        this.tr = tr;
+        tr.setComponents(AManhattan, AEuclidean, AOctile, AChebyshev, BManhattan, BEuclidean, 
+                BOctile, BChebyshev, Breadth, Depth, Dijkstra, ready);
+        ready.addActionListener(tr);
     }
 
     private void initializeComponents() {
@@ -83,6 +90,10 @@ public class AlgorithmSelection extends JPanel {
         add(Depth);
         add(Dijkstra);
         add(ready);
+    }
+    
+    private void addActionListeners(){
+        
     }
 
     private void addLabels() {

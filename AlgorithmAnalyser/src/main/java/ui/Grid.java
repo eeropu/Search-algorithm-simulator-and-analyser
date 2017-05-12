@@ -1,6 +1,8 @@
 package ui;
 
 import algorithms.Algorithm;
+import algorithms.BestFirstSearch;
+import algorithms.DijkstraOrAStar;
 import datastructures.Vertex;
 import java.awt.Color;
 import java.awt.Dimension;
@@ -24,6 +26,8 @@ public class Grid extends JPanel {
     private Square[][] squares;
     private SquareListener sl;
     private Timer timer;
+
+    private long l;
 
     /**
      * Constructor for this class.
@@ -230,21 +234,76 @@ public class Grid extends JPanel {
 
     private Timer initializeSimulationTimer(Algorithm a, int i) {
         return new Timer(i, (ActionEvent e) -> {
+            runAlgorithmSimulation(a);
+        });
+    }
+
+    private void runAlgorithmSimulation(Algorithm a) {
+        if (a.currentReady()) {
+            if (a.done()) {
+                a.getRoute();
+                stop();
+            } else {
+                a.next();
+            }
+        }
+        a.run();
+        repaint();
+    }
+
+    private void stop() {
+        timer.stop();
+    }
+
+    public void algorithmTestPreset(Algorithm a, String s) {
+        if (a.getClass() == DijkstraOrAStar.class && !s.equals("")) {
+            setWeightsAndHeuristics(s);
+        } else if (a.getClass() == DijkstraOrAStar.class) {
+            setWeights();
+        } else if (a.getClass() == BestFirstSearch.class) {
+            setHeauristics(s);
+        } else {
+            newVertices();
+        }
+    }
+
+    private void newVertices() {
+        for (Square[] square : squares) {
+            for (Square s : square) {
+                s.setV(new Vertex(s.getXcoor(), s.getYcoor()));
+            }
+        }
+    }
+
+    public void runAlgorithmTest(Algorithm a, boolean diagonal) {
+        resetVertices();
+
+        if (diagonal) {
+            initializeSquaresWithDiagonals();
+        } else {
+            initializeSquares();
+        }
+
+        while (!a.done()) {
             if (a.currentReady()) {
                 if (a.done()) {
-                    a.getRoute();
-                    stop();
+                    break;
                 } else {
                     a.next();
                 }
             }
             a.run();
-            repaint();
-        });
+        }
     }
 
-    private void stop() {
-        timer.stop();
+    private void resetVertices() {
+        for (Square[] square : squares) {
+            for (Square s : square) {
+                if (s.getV().getMode() != 's' && s.getV().getMode() != 'f' && s.getV().getMode() != 'b') {
+                    s.getV().setMode('w');
+                }
+            }
+        }
     }
 
 }

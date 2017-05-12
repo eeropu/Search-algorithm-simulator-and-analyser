@@ -45,8 +45,10 @@ public class BestFirstSearch extends AlgorithmBase {
 
     @Override
     public void next() {
-        current.setMode('d');
-        current.refresh();
+        if (current.getMode() != 's') {
+            current.setMode('d');
+            current.refresh();
+        }
         current = h.delMin();
     }
 
