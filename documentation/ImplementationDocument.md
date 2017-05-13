@@ -7,6 +7,10 @@ The DataStructures package contains all the datastructures that are being used b
 ### UI
 the UI-package contains the objects that form the user interface. Grid is the base for the Graph and it contains a two-dimensional array of Squares, which represent the vertices. In addition to these, the package also contains the Menu and SimulationMenu classes that create the UIs to the right border of the screen, from which the user can, for instance, navigate between menus, modify the graph and run simulations.
 ### UI.Listeners
-The UI-listeners package contains the classes that are used to give functionality to UI-classes. These are MenuListener, SimulationMenuListener and SquareListener which are all quite self-explanatory.
+The UI-listeners package contains the classes that are used to give functionality to UI-classes. These are MenuListener, SimulationMenuListener, SpeedTesterWindowOpener and SquareListener which are all quite self-explanatory.
+### UI.testresultwindow
+The UI.testresultwindow contains all the classes used to show the speedtestresults. AlgorithmSelection lets user choose the algorithms to be tested. LoadingScreen is shown to the user while the algorithms are being ecexuted. Results shows the testresults and the ResultsWindowHandler is responsible for which of the above is shown. TestRunner runs the tests.
 #### other
 Project also contains the algorithm.algorithmanalyser -package which only contains the Main class. This class is only used to launch the program by creating and running a WindowHandler -object.
+# Time and space Complexities:
+The desired time and space complexities (that were listed in the [subject definition](https://github.com/eeropu/Search-algorithm-simulator-and-analyser/blob/master/documentation/SubjectDefinition.md) were achieved with each algorithm. There is an additional 2n operations with each algorithm execution because the vertices need to be updated and the start vertex needs to be found. This doesn't change the complexity-class though because O(n) is smaller than any of the algorithms's basic complexities.
