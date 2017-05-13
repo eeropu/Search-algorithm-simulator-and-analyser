@@ -6,20 +6,26 @@ import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
-import ui.Grid;
 
 /**
+ * Creates the window where user can choose what algorithms are going to be
+ * included in the comparison.
  *
  * @author eerop
  */
 public class AlgorithmSelection extends JPanel {
 
-    private JCheckBox AManhattan, AEuclidean, AOctile, AChebyshev, BManhattan, BEuclidean,
-            BOctile, BChebyshev, Breadth, Depth, Dijkstra;
+    private JCheckBox aManhattan, aEuclidean, aOctile, aChebyshev, bManhattan, bEuclidean,
+            bOctile, bChebyshev, breadth, depth, dijkstra;
     private JButton ready;
     private Font heuristics, algorithms;
     private TestRunner tr;
 
+    /**
+     * Basic constructor.
+     *
+     * @param tr testrunner
+     */
     public AlgorithmSelection(TestRunner tr) {
         this.setLayout(null);
         this.setPreferredSize(new Dimension(960, 544));
@@ -28,72 +34,68 @@ public class AlgorithmSelection extends JPanel {
         setPositionings();
         addComponents();
         addLabels();
-        
+
         this.tr = tr;
-        tr.setComponents(AManhattan, AEuclidean, AOctile, AChebyshev, BManhattan, BEuclidean, 
-                BOctile, BChebyshev, Breadth, Depth, Dijkstra, ready);
+        tr.setComponents(aManhattan, aEuclidean, aOctile, aChebyshev, bManhattan, bEuclidean,
+                bOctile, bChebyshev, breadth, depth, dijkstra, ready);
         ready.addActionListener(tr);
     }
 
     private void initializeComponents() {
-        this.AManhattan = new JCheckBox("Manhattan");
-        AManhattan.setFont(heuristics);
-        this.AEuclidean = new JCheckBox("Euclidean");
-        AEuclidean.setFont(heuristics);
-        this.AOctile = new JCheckBox("Octile");
-        AOctile.setFont(heuristics);
-        this.AChebyshev = new JCheckBox("Chebyshev");
-        AChebyshev.setFont(heuristics);
-        this.BManhattan = new JCheckBox("Manhattan");
-        BManhattan.setFont(heuristics);
-        this.BEuclidean = new JCheckBox("Euclidean");
-        BEuclidean.setFont(heuristics);
-        this.BOctile = new JCheckBox("Octile");
-        BOctile.setFont(heuristics);
-        this.BChebyshev = new JCheckBox("Chebyshev");
-        BChebyshev.setFont(heuristics);
-        this.Breadth = new JCheckBox("BFS");
-        Breadth.setFont(algorithms);
-        this.Depth = new JCheckBox("DFS");
-        Depth.setFont(algorithms);
-        this.Dijkstra = new JCheckBox("Dijkstra");
-        Dijkstra.setFont(algorithms);
+        this.aManhattan = new JCheckBox("Manhattan");
+        aManhattan.setFont(heuristics);
+        this.aEuclidean = new JCheckBox("Euclidean");
+        aEuclidean.setFont(heuristics);
+        this.aOctile = new JCheckBox("Octile");
+        aOctile.setFont(heuristics);
+        this.aChebyshev = new JCheckBox("Chebyshev");
+        aChebyshev.setFont(heuristics);
+        this.bManhattan = new JCheckBox("Manhattan");
+        bManhattan.setFont(heuristics);
+        this.bEuclidean = new JCheckBox("Euclidean");
+        bEuclidean.setFont(heuristics);
+        this.bOctile = new JCheckBox("Octile");
+        bOctile.setFont(heuristics);
+        this.bChebyshev = new JCheckBox("Chebyshev");
+        bChebyshev.setFont(heuristics);
+        this.breadth = new JCheckBox("BFS");
+        breadth.setFont(algorithms);
+        this.depth = new JCheckBox("DFS");
+        depth.setFont(algorithms);
+        this.dijkstra = new JCheckBox("Dijkstra");
+        dijkstra.setFont(algorithms);
         this.ready = new JButton("Continue");
         ready.setFont(algorithms);
     }
 
     private void setPositionings() {
-        AManhattan.setBounds(64, 224, 160, 32);
-        AEuclidean.setBounds(64, 256, 160, 32);
-        AOctile.setBounds(64, 288, 160, 32);
-        AChebyshev.setBounds(64, 320, 160, 32);
-        BManhattan.setBounds(256, 224, 160, 32);
-        BEuclidean.setBounds(256, 256, 160, 32);
-        BOctile.setBounds(256, 288, 160, 32);
-        BChebyshev.setBounds(256, 320, 160, 32);
-        Breadth.setBounds(448, 192, 160, 32);
-        Depth.setBounds(608, 192, 160, 32);
-        Dijkstra.setBounds(768, 192, 160, 32);
+        aManhattan.setBounds(64, 224, 160, 32);
+        aEuclidean.setBounds(64, 256, 160, 32);
+        aOctile.setBounds(64, 288, 160, 32);
+        aChebyshev.setBounds(64, 320, 160, 32);
+        bManhattan.setBounds(256, 224, 160, 32);
+        bEuclidean.setBounds(256, 256, 160, 32);
+        bOctile.setBounds(256, 288, 160, 32);
+        bChebyshev.setBounds(256, 320, 160, 32);
+        breadth.setBounds(448, 192, 160, 32);
+        depth.setBounds(608, 192, 160, 32);
+        dijkstra.setBounds(768, 192, 160, 32);
         ready.setBounds(320, 448, 320, 64);
     }
 
     private void addComponents() {
-        add(AManhattan);
-        add(AEuclidean);
-        add(AOctile);
-        add(AChebyshev);
-        add(BManhattan);
-        add(BEuclidean);
-        add(BOctile);
-        add(BChebyshev);
-        add(Breadth);
-        add(Depth);
-        add(Dijkstra);
+        add(aManhattan);
+        add(aEuclidean);
+        add(aOctile);
+        add(aChebyshev);
+        add(bManhattan);
+        add(bEuclidean);
+        add(bOctile);
+        add(bChebyshev);
+        add(breadth);
+        add(depth);
+        add(dijkstra);
         add(ready);
-    }
-    
-    private void addActionListeners(){
-        
     }
 
     private void addLabels() {

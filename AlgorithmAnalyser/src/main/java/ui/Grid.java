@@ -255,6 +255,12 @@ public class Grid extends JPanel {
         timer.stop();
     }
 
+    /**
+     * Sets the graphs vertices ready for the algorithm.
+     *
+     * @param a runnable algorithm
+     * @param s possible heuristic
+     */
     public void algorithmTestPreset(Algorithm a, String s) {
         if (a.getClass() == DijkstraOrAStar.class && !s.equals("")) {
             setWeightsAndHeuristics(s);
@@ -275,6 +281,12 @@ public class Grid extends JPanel {
         }
     }
 
+    /**
+     * Runs the algorithmtest.
+     *
+     * @param a runnable algorithm
+     * @param diagonal true if diagonal movement is allowed
+     */
     public void runAlgorithmTest(Algorithm a, boolean diagonal) {
         resetVertices();
 

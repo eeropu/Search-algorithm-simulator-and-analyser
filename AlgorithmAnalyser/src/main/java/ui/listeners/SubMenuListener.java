@@ -165,7 +165,7 @@ public class SubMenuListener implements ActionListener {
         } else if (e.getSource() == help) {
             if (Desktop.isDesktopSupported()) {
                 try {
-                    Desktop.getDesktop().browse(new URI("www.github.com/eeropu/Search-algorithm-simulator-and-analyser"));
+                    Desktop.getDesktop().browse(new URI("https://github.com/eeropu/Search-algorithm-simulator-and-analyser/blob/master/documentation/Instructions.md"));
                 } catch (IOException | URISyntaxException ex) {
                     JOptionPane.showMessageDialog(null, "Go to www.github.com/eeropu/Search-algorithm-simulator-and-analyser for instructions", "Failed to open browser", JOptionPane.INFORMATION_MESSAGE);
                 }
@@ -212,10 +212,10 @@ public class SubMenuListener implements ActionListener {
             setHeuristic.setForeground(Color.lightGray);
         }
     }
-    
-    private boolean startAndFinishAreSelected(){
+
+    private boolean startAndFinishAreSelected() {
         boolean b = grid.getStartOrFinish('s') != null && grid.getStartOrFinish('f') != null;
-        if(!b){
+        if (!b) {
             JOptionPane.showMessageDialog(null, "Grid needs to have start and finish!", "ERROR", JOptionPane.ERROR_MESSAGE);
         }
         return b;

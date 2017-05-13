@@ -155,8 +155,8 @@ public class SubMenu extends JPanel {
         add(yes);
         add(no);
     }
-    
-    private void setSpeed(){
+
+    private void setSpeed() {
         speed = new JLabel("Set speed:");
         speed.setFont(font);
         speed.setBounds(32, 448, 128, 32);
@@ -198,8 +198,11 @@ public class SubMenu extends JPanel {
         back.addActionListener(sml);
         help.addActionListener(sml);
     }
-    
-    public void simulationMenu(){
+
+    /**
+     * Sets the components for simulationmenu.
+     */
+    public void simulationMenu() {
         add(jcb);
         add(setHeuristic);
         add(manhattan);
@@ -212,8 +215,11 @@ public class SubMenu extends JPanel {
         activate.removeActionListener(stwo);
         activate.addActionListener(sml);
     }
-    
-    public void speedTestMenu(){
+
+    /**
+     * Sets the components for speedtestmenu.
+     */
+    public void speedTestMenu() {
         remove(jcb);
         remove(setHeuristic);
         remove(manhattan);

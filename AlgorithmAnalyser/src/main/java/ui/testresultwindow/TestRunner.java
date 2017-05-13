@@ -12,13 +12,14 @@ import javax.swing.JOptionPane;
 import ui.Grid;
 
 /**
+ * Runs the tests for the selected algorithms.
  *
  * @author eerop
  */
 public class TestRunner implements ActionListener {
 
-    private JCheckBox AManhattan, AEuclidean, AOctile, AChebyshev, BManhattan, BEuclidean,
-            BOctile, BChebyshev, Breadth, Depth, Dijkstra;
+    private JCheckBox aManhattan, aEuclidean, aOctile, aChebyshev, bManhattan, bEuclidean,
+            bOctile, bChebyshev, breadth, depth, dijkstra;
     private JButton ready;
     private Grid grid;
     private boolean diagonal;
@@ -26,6 +27,13 @@ public class TestRunner implements ActionListener {
     private ResultsWindowHandler rwh;
     private final String[] results;
 
+    /**
+     * Constructor for this class.
+     *
+     * @param grid reference to the grid
+     * @param diagonal true if diagonal movement is allowed
+     * @param rwh reference to the resultswindowhandler
+     */
     public TestRunner(Grid grid, boolean diagonal, ResultsWindowHandler rwh) {
         this.grid = grid;
         this.diagonal = diagonal;
@@ -42,9 +50,9 @@ public class TestRunner implements ActionListener {
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == ready) {
             rwh.load();
-            Thread thread = new Thread(){
+            Thread thread = new Thread() {
                 @Override
-                public void run(){
+                public void run() {
                     runAlgorithms();
                 }
             };
@@ -53,37 +61,37 @@ public class TestRunner implements ActionListener {
     }
 
     private void runAlgorithms() {
-        if (AManhattan.isSelected()) {
+        if (aManhattan.isSelected()) {
             run("Astar", "manhattan");
         }
-        if (AEuclidean.isSelected()) {
+        if (aEuclidean.isSelected()) {
             run("Astar", "euclidean");
         }
-        if (AOctile.isSelected()) {
+        if (aOctile.isSelected()) {
             run("Astar", "octile");
         }
-        if (AChebyshev.isSelected()) {
+        if (aChebyshev.isSelected()) {
             run("Astar", "chebychev");
         }
-        if (BManhattan.isSelected()) {
+        if (bManhattan.isSelected()) {
             run("BestFirst", "manhattan");
         }
-        if (BEuclidean.isSelected()) {
+        if (bEuclidean.isSelected()) {
             run("BestFirst", "euclidean");
         }
-        if (BOctile.isSelected()) {
+        if (bOctile.isSelected()) {
             run("BestFirst", "octile");
         }
-        if (BChebyshev.isSelected()) {
+        if (bChebyshev.isSelected()) {
             run("BestFirst", "chebyshev");
         }
-        if (Breadth.isSelected()) {
+        if (breadth.isSelected()) {
             run("BFS", "");
         }
-        if (Depth.isSelected()) {
+        if (depth.isSelected()) {
             run("DFS", "");
         }
-        if (Dijkstra.isSelected()) {
+        if (dijkstra.isSelected()) {
             run("Dijkstra", "");
         }
         rwh.showResults(results);
@@ -132,7 +140,7 @@ public class TestRunner implements ActionListener {
         for (long b : array) {
             result += b;
         }
-        
+
         for (int j = 0; j < results.length; j++) {
             if (results[j].equals("")) {
                 results[j] = a + " " + s;
@@ -152,22 +160,38 @@ public class TestRunner implements ActionListener {
         thread.start();
     }
 
-    public void setComponents(JCheckBox AManhattan, JCheckBox AEuclidean, JCheckBox AOctile,
-            JCheckBox AChebyshev, JCheckBox BManhattan, JCheckBox BEuclidean, JCheckBox BOctile,
-            JCheckBox BChebyshev, JCheckBox Breadth, JCheckBox Depth, JCheckBox Dijkstra,
+    /**
+     * Used to give access to the checkboxes in the algorithmselection.
+     *
+     * @param aManhattan JCheckBox
+     * @param aEuclidean JCheckBox
+     * @param aOctile JCheckBox
+     * @param aChebyshev JCheckBox
+     * @param bManhattan JCheckBox
+     * @param bEuclidean JCheckBox
+     * @param bOctile JCheckBox
+     * @param bChebyshev JCheckBox
+     * @param breadth JCheckBox
+     * @param depth JCheckBox
+     * @param dijkstra JCheckBox
+     * @param ready JButton
+     */
+    public void setComponents(JCheckBox aManhattan, JCheckBox aEuclidean, JCheckBox aOctile,
+            JCheckBox aChebyshev, JCheckBox bManhattan, JCheckBox bEuclidean, JCheckBox bOctile,
+            JCheckBox bChebyshev, JCheckBox breadth, JCheckBox depth, JCheckBox dijkstra,
             JButton ready) {
 
-        this.AManhattan = AManhattan;
-        this.AEuclidean = AEuclidean;
-        this.AOctile = AOctile;
-        this.AChebyshev = AChebyshev;
-        this.BManhattan = BManhattan;
-        this.BEuclidean = BEuclidean;
-        this.BOctile = BOctile;
-        this.BChebyshev = BChebyshev;
-        this.Breadth = Breadth;
-        this.Depth = Depth;
-        this.Dijkstra = Dijkstra;
+        this.aManhattan = aManhattan;
+        this.aEuclidean = aEuclidean;
+        this.aOctile = aOctile;
+        this.aChebyshev = aChebyshev;
+        this.bManhattan = bManhattan;
+        this.bEuclidean = bEuclidean;
+        this.bOctile = bOctile;
+        this.bChebyshev = bChebyshev;
+        this.breadth = breadth;
+        this.depth = depth;
+        this.dijkstra = dijkstra;
         this.ready = ready;
     }
 

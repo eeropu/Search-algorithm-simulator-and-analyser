@@ -7,25 +7,32 @@ import javax.swing.JPanel;
 import ui.Grid;
 
 /**
+ * This class is responsible of what is shown in the speedtest-window.
  *
  * @author eerop
  */
-public class ResultsWindowHandler implements Runnable{
-    
+public class ResultsWindowHandler implements Runnable {
+
     private JFrame frame;
     private final CardLayout cl;
     private final JPanel cardPanel;
     private AlgorithmSelection algorithmselection;
     private Grid grid;
 
+    /**
+     * Basic constructor.
+     *
+     * @param grid reference to the grid
+     * @param diagonal true if diagonal movement is allowed
+     */
     public ResultsWindowHandler(Grid grid, boolean diagonal) {
         this.grid = grid;
-        
+
         TestRunner tr = new TestRunner(grid, diagonal, this);
-        
+
         this.cl = new CardLayout();
         this.cardPanel = new JPanel(cl);
-        
+
         this.algorithmselection = new AlgorithmSelection(tr);
         cardPanel.add(algorithmselection, "select");
     }
@@ -38,13 +45,21 @@ public class ResultsWindowHandler implements Runnable{
         frame.add(cardPanel);
         frame.pack();
     }
-    
-    public void load(){
+
+    /**
+     * Shows the loadscreen.
+     */
+    public void load() {
         cardPanel.add(new LoadingScreen(), "load");
         cl.show(cardPanel, "load");
     }
-    
-    public void showResults(String... s){
+
+    /**
+     * Shows the results screen.
+     *
+     * @param s the testresults
+     */
+    public void showResults(String... s) {
         cardPanel.add(new Results(s), "result");
         cl.show(cardPanel, "result");
     }

@@ -3,11 +3,11 @@ package ui.testresultwindow;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.Graphics;
-import java.awt.Rectangle;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 /**
+ * Creates the results window.
  *
  * @author eerop
  */
@@ -16,6 +16,11 @@ public class Results extends JPanel {
     private String[] strings;
     private int[] heights;
 
+    /**
+     * Basic constructor.
+     *
+     * @param strings contains the testresults that are going to be shown
+     */
     public Results(String... strings) {
         setLayout(null);
         this.strings = strings;
