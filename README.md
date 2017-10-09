@@ -1,6 +1,6 @@
 # Search-algorithm-simulator-and-analyser
 Data structures and algorithms project.  
-#### !
+## !
 There is a problem concerning the speedtesting. The results are often wrong (for example A* is slower than Breadth first search). This is most likely caused by java's built in operations like garbage collector etc. For reliable results, it would be better to use language such as C for example.
 ### Instructions:
 [instructions](https://github.com/eeropu/Search-algorithm-simulator-and-analyser/blob/master/documentation/Instructions.md)
